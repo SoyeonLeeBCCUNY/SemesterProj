@@ -1,0 +1,11 @@
+---
+title: "ReproducibleReport"
+author: "Soyeon Lee"
+date: "12/17/2020"
+output: html_document
+---
+```{r}
+#load data
+the_data<-read.csv("SchroederEpley2015data.csv", header=TRUE)
+```
+
