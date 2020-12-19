@@ -1,0 +1,82 @@
+---
+title             : "Reproducing the analysis of Schroeder and Epley (2015)"
+shorttitle        : "Sound of intellect"
+
+author: 
+  - name          : "Soyeon Lee"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "2900 Bedford Ave"
+    email         : "soyeon.lee28@bcmail.cuny.edu"
+    
+affiliation:
+  - id            : "1"
+    institution   : "Brooklyn College of the City University of New York"
+ 
+authornote: |
+  Soyeon Lee, Student in Experimental Psychology Program, Broklyn College of the City of New York.
+
+abstract: |
+  A reproduction of the analysis for Experiment 4 from Schroeder and Epley (2015). 
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "Voice, Intellect"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
+---
+
+```{r setup, include = FALSE}
+library("papaja")
+r_refs("r-references.bib")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+
+
+# Methods
+We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
+
+## Participants
+
+## Material
+
+## Procedure
+
+## Data analysis
+We used `r cite_r("r-references.bib")` for all our analyses.
+
+
+# Results
+
+# Discussion
+
+
+\newpage
+
+# References
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup
