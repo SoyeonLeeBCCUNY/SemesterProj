@@ -45,7 +45,6 @@ hire_results<-t.test(all_data[all_data$condition=='audio',]$Hire_Rating,
 
 ###tables of means for each condition
 ```{r}
-library(dplyr)
 impression_samples<-all_data%>%group_by(condition)%>%
   summarize(Mean=mean(Impression_Rating),
             SD=sd(Impression_Rating)
