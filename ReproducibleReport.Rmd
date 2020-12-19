@@ -45,13 +45,29 @@ hire_results<-t.test(all_data[all_data$condition=='audio',]$Hire_Rating,
 
 ###tables of means for each condition
 ```{r}
+impression_samples<-all_data%>%group_by(condition)%>%
+  summarize(Mean=mean(Impression_Rating),
+            SD=sd(Impression_Rating)
+            )
+impression_samples[,-1]<-printnum(impression_samples[,-1])
 
-(impression_samples<-aggregate(Impression_Rating~condition,
-                              all_data,
-                              mean))
-(hire_samples<-aggregate(Hire_Rating~condition,
-                         all_data,
-                         mean))
+apa_table(
+  impression_samples,
+    caption="Impression Rating samples.",
+    escape=TRUE
+)
+
+hire_samples<-all_data%>%group_by(condition)%>%
+  summarize(Mean=mean(Hire_Rating),
+            SD=sd(Hire_Rating)
+            )
+hire_samples[,-1]<-printnum(hire_samples[,-1])
+
+apa_table(
+  hire_samples,
+    caption="Hire Rating samples.",
+    escape=TRUE
+)
 ```
 
 ###Reproducing the figure
