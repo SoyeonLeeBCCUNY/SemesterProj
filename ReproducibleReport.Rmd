@@ -11,26 +11,27 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ##Introduction
 
-This report reproduces two analyses in Experiment 4 by Schroder and Epley (2015). The citation for the article is:
+This report reproduces the analysis of Experiment 4 reported in Schroder and Epley (2015). The citation for the article is:
   
 Schroeder, J., & Epley, N. (2015). The sound of intellect: Speech reveals a thoughtful mind, increasing a job candidate’s appeal. Psychological science, 26(6), 877-891.
 
 The data were downloaded from https://raw.githubusercontent.com/CrumpLab/statisticsLab/master/data/SchroederEpley2015data.csv
 
-To study the perception of intellect inferred from speech, Schroeder and Epley (2015) investigated completed four experiments. In Experiment 4, the professional recruiters rated the candidates' intellect, impression, and hiring likelihood based on pitches delivered via audio or transcript. This report replicates two analyses: the effects of two conditions (audio vs. transcript) on impression and hire rating, using independent samples t tests.
+Schroeder and Epley (2015) investigated perception of intellect inferred from speech involved in hiring process. In Experiment 4, the professional recruiters rated candidates' intellect, impression, and hiring likeliness based on pitches delivered via audio or transcript. This report replicates the authors' analysis of the effects of two conditions (audio vs. transcript) on the impression and hire rating using independent samples t tests.
 
 
 ##Re-analysis
-```{r}
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+#load libraries and data
 library(papaja)
 library(dplyr)
 library(ggplot2)
 library(tidyverse)
 
-#load data
 all_data<-read.csv("SchroederEpley2015data.csv", header=TRUE)
 all_data<-all_data%>% rename(condition=ï..CONDITION)
 
+#t tests for impression and hire rating
 all_data$condition <- as.factor(all_data$condition)
 levels(all_data$condition) <- c("transcript","audio")
 

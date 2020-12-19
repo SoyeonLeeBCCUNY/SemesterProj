@@ -1,6 +1,6 @@
 ---
 title             : "Reproducing the analysis of Schroeder and Epley (2015)"
-shorttitle        : "Sound of intellect"
+shorttitle        : "The Sound of Intellect"
 
 author: 
   - name          : "Soyeon Lee"
@@ -14,7 +14,7 @@ affiliation:
     institution   : "Brooklyn College of the City University of New York"
  
 authornote: |
-  Soyeon Lee, Student in Experimental Psychology Program, Broklyn College of the City of New York.
+  Soyeon Lee, Experimental Psychology Student, Broklyn College of the City of New York.
 
 abstract: |
   A reproduction of the analysis for Experiment 4 from Schroeder and Epley (2015). 
@@ -24,7 +24,7 @@ abstract: |
 keywords          : "Voice, Intellect"
 wordcount         : "X"
 
-bibliography      : ["r-references.bib"]
+bibliography      : ["r-references.bib","myreferences.bib"]
 
 floatsintext      : no
 figurelist        : no
@@ -41,7 +41,6 @@ output            : papaja::apa6_pdf
 
 ```{r setup, include = FALSE}
 library("papaja")
-r_refs("r-references.bib")
 ```
 
 ```{r analysis-preferences}
@@ -49,23 +48,112 @@ r_refs("r-references.bib")
 set.seed(42)
 knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
+# Introduction
 
+This report reproduces the analysis of Experiment 4 reported in @schroeder_sound_2015. The citation for the article is:
+  
+Schroeder, J., & Epley, N. (2015). The sound of intellect: Speech reveals a thoughtful mind, increasing a job candidate’s appeal. Psychological science, 26(6), 877-891.
 
+The data were downloaded from https://raw.githubusercontent.com/CrumpLab/statisticsLab/master/data/SchroederEpley2015data.csv
+
+@schroeder_sound_2015 investigated perception of intellect inferred from speech involved in hiring process. In Experiment 4, the professional recruiters rated hypothetical candidates' intellect, impression, and hiring likeliness based on pitches delivered via audio or transcript. This report replicates the authors' analysis of the effects of two conditions (audio vs. transcript) on the impression and hire rating using independent samples t tests.
 
 # Methods
-We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
 
 ## Participants
 
+There were 39 professional recruiters from Fortune 500 companies.
+
 ## Material
+
+Three randomly selected candidate pitches from Experiment 1 were used.
 
 ## Procedure
 
-## Data analysis
-We used `r cite_r("r-references.bib")` for all our analyses.
-
+The experiment was conducted online. Randomly assigned recruiters either read or listened to candidates' pitches. The recruiters' responses on intellect, impression and hire ratings of candidates were recorded.
 
 # Results
+```{r,echo=FALSE,warning=FALSE,message=FALSE}
+#load libraries and data
+library(papaja)
+library(dplyr)
+library(ggplot2)
+library(tidyverse)
+
+all_data<-read.csv("SchroederEpley2015data.csv", header=TRUE)
+all_data<-all_data%>% rename(condition=ï..CONDITION)
+```
+For each dimension (impression and hire), mean rating scores for each condition (transcript and voice) were submitted to independent samples t tests. Means and standard deviations in each condition for Impression ratings dimension are displayed in Table 1, and Figure 1.  Means and standard deviations in each condition for Hire ratings dimension are displayed in Table 2, and Figure 1.
+
+```{r,warning=FALSE, message=FALSE}
+#t tests for impression and hire rating
+all_data$condition <- as.factor(all_data$condition)
+levels(all_data$condition) <- c("transcript","audio")
+
+impression_results<-t.test(all_data[all_data$condition=='audio',]$Impression_Rating,
+                           all_data[all_data$condition=='transcript',]$Impression_Rating,
+                           var.equal=TRUE)
+
+hire_results<-t.test(all_data[all_data$condition=='audio',]$Hire_Rating,
+                     all_data[all_data$condition=='transcript',]$Hire_Rating,
+                     var.equal=TRUE)
+
+##Make and print the tables
+impression_samples<-all_data%>%group_by(condition)%>%
+  summarize(Mean=mean(Impression_Rating),
+            SD=sd(Impression_Rating)
+            )
+impression_samples[,-1]<-printnum(impression_samples[,-1])
+
+apa_table(
+  impression_samples,
+    caption="Impression Rating samples.",
+    escape=TRUE
+)
+
+hire_samples<-all_data%>%group_by(condition)%>%
+  summarize(Mean=mean(Hire_Rating),
+            SD=sd(Hire_Rating)
+            )
+hire_samples[,-1]<-printnum(hire_samples[,-1])
+
+apa_table(
+  hire_samples,
+    caption="Hire Rating samples.",
+    escape=TRUE
+)
+```
+
+```{r,warning=FALSE, message=FALSE}
+#Make and print figures
+CONDITION <- rep(all_data$condition,3)
+
+ratings<-c(all_data$Intellect_Rating,
+           all_data$Impression_Rating,
+           all_data$Hire_Rating)
+
+num_to_repeat<-length(all_data$condition)
+
+rating_type<-rep(c("Intellect","General Impression","Hiring Likelihood"),num_to_repeat)
+
+plot_all<-data.frame(CONDITION,rating_type,ratings)
+
+descriptive_all<-plot_all %>%
+                  group_by(CONDITION,rating_type)%>%
+                  summarise(means=mean(ratings),
+                            SEs=sd(ratings)/sqrt(length(ratings)))
+
+apa_barplot(descriptive_all,
+        aes(x=rating_type, y=means, group=CONDITION))+
+    geom_bar(stat="identity",aes(fill=CONDITION),position="dodge")+
+        ylab("Recruiters' Evaluation of Candidates")+
+        theme_classic()+
+    geom_errorbar(aes(ymin=means-SEs,
+                      ymax=means+SEs),
+                  width=.25,
+                  position=position_dodge(width = .9))
+```
+
 
 # Discussion
 

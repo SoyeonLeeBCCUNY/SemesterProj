@@ -111,7 +111,7 @@
   {\section*{\protect\normalfont{\@title}}}
   {}{\typeout{Failed to patch title.}}
 \makeatother
-\shorttitle{Sound of intellect}
+\shorttitle{The Sound of Intellect}
 \keywords{Voice, Intellect\newline\indent Word count: X}
 \DeclareDelayedFloatFlavor{ThreePartTable}{table}
 \DeclareDelayedFloatFlavor{lltable}{table}
@@ -138,7 +138,7 @@
 
 \authornote{
 
-Soyeon Lee, Student in Experimental Psychology Program, Broklyn College of the City of New York.
+Soyeon Lee, Experimental Psychology Student, Broklyn College of the City of New York.
 
 Correspondence concerning this article should be addressed to Soyeon Lee, 2900 Bedford Ave. E-mail: \href{mailto:soyeon.lee28@bcmail.cuny.edu}{\nolinkurl{soyeon.lee28@bcmail.cuny.edu}}
 
@@ -155,27 +155,83 @@ A reproduction of the analysis for Experiment 4 from Schroeder and Epley (2015).
 \begin{document}
 \maketitle
 
+\hypertarget{introduction}{%
+\section{Introduction}\label{introduction}}
+
+This report reproduces the analysis of Experiment 4 reported in Schroeder and Epley (2015). The citation for the article is:
+
+Schroeder, J., \& Epley, N. (2015). The sound of intellect: Speech reveals a thoughtful mind, increasing a job candidate's appeal. Psychological science, 26(6), 877-891.
+
+The data were downloaded from \url{https://raw.githubusercontent.com/CrumpLab/statisticsLab/master/data/SchroederEpley2015data.csv}
+
+Schroeder and Epley (2015) investigated perception of intellect inferred from speech involved in hiring process. In Experiment 4, the professional recruiters rated hypothetical candidates' intellect, impression, and hiring likeliness based on pitches delivered via audio or transcript. This report replicates the authors' analysis of the effects of two conditions (audio vs.~transcript) on the impression and hire rating using independent samples t tests.
+
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
-
-We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study.
 
 \hypertarget{participants}{%
 \subsection{Participants}\label{participants}}
 
+There were 39 professional recruiters from Fortune 500 companies.
+
 \hypertarget{material}{%
 \subsection{Material}\label{material}}
+
+Three randomly selected candidate pitches from Experiment 1 were used.
 
 \hypertarget{procedure}{%
 \subsection{Procedure}\label{procedure}}
 
-\hypertarget{data-analysis}{%
-\subsection{Data analysis}\label{data-analysis}}
-
-We used R (Version 4.0.2; R Core Team, 2020) and the R-package \emph{papaja} (Version 0.1.0.9997; Aust \& Barth, 2020) for all our analyses.
+The experiment was conducted online. Randomly assigned recruiters either read or listened to candidates' pitches. The recruiters' responses on intellect, impression and hire ratings of candidates were recorded.
 
 \hypertarget{results}{%
 \section{Results}\label{results}}
+
+For each dimension (impression and hire), mean rating scores for each condition (transcript and voice) were submitted to independent samples t tests. Means and standard deviations in each condition for Impression ratings dimension are displayed in Table 1, and Figure 1. Means and standard deviations in each condition for Hire ratings dimension are displayed in Table 2, and Figure 1.
+
+\begin{table}[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:unnamed-chunk-2}Impression Rating samples.}
+
+\begin{tabular}{lll}
+\toprule
+condition & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{SD}\\
+\midrule
+transcript & 4.07 & 2.23\\
+audio & 5.97 & 1.92\\
+\bottomrule
+\end{tabular}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+\begin{table}[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:unnamed-chunk-2}Hire Rating samples.}
+
+\begin{tabular}{lll}
+\toprule
+condition & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{SD}\\
+\midrule
+transcript & 2.89 & 2.05\\
+audio & 4.71 & 2.26\\
+\bottomrule
+\end{tabular}
+
+\end{threeparttable}
+\end{center}
+
+\end{table}
+
+\includegraphics{APAreport_files/figure-latex/unnamed-chunk-3-1.pdf}
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
@@ -190,11 +246,8 @@ We used R (Version 4.0.2; R Core Team, 2020) and the R-package \emph{papaja} (Ve
 \setlength{\leftskip}{0.5in}
 
 \hypertarget{refs}{}
-\leavevmode\hypertarget{ref-R-papaja}{}%
-Aust, F., \& Barth, M. (2020). \emph{papaja: Create APA manuscripts with R Markdown}. Retrieved from \url{https://github.com/crsh/papaja}
-
-\leavevmode\hypertarget{ref-R-base}{}%
-R Core Team. (2020). \emph{R: A language and environment for statistical computing}. Vienna, Austria: R Foundation for Statistical Computing. Retrieved from \url{https://www.R-project.org/}
+\leavevmode\hypertarget{ref-schroeder_sound_2015}{}%
+Schroeder, J., \& Epley, N. (2015). The sound of intellect: Speech reveals a thoughtful mind, increasing a job candidate's appeal. \emph{Psychological Science}, \emph{26}(6), 877--891. \url{https://doi.org/10.1177/0956797615572906}
 
 \endgroup
 

@@ -1,0 +1,44 @@
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:unnamed-chunk-2}Impression Rating samples.}
+
+\begin{tabular}{lll}
+\toprule
+condition & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{SD}\\
+\midrule
+transcript & 4.07 & 2.23\\
+audio & 5.97 & 1.92\\
+\bottomrule
+\end{tabular}
+
+\end{threeparttable}
+\end{center}
+
+\end{table*}
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+[tbp]
+
+\begin{center}
+\begin{threeparttable}
+
+\caption{\label{tab:unnamed-chunk-2}Hire Rating samples.}
+
+\begin{tabular}{lll}
+\toprule
+condition & \multicolumn{1}{c}{Mean} & \multicolumn{1}{c}{SD}\\
+\midrule
+transcript & 2.89 & 2.05\\
+audio & 4.71 & 2.26\\
+\bottomrule
+\end{tabular}
+
+\end{threeparttable}
+\end{center}
+
+\end{table*}
