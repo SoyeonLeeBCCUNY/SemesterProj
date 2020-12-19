@@ -3,6 +3,11 @@ title: "ReproducibleReport"
 author: "Soyeon Lee"
 date: "12/18/2020"
 output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
 
 ##Introduction
 
@@ -38,8 +43,9 @@ hire_results<-t.test(all_data[all_data$condition=='audio',]$Hire_Rating,
                      var.equal=TRUE)
 ```
 
-###table of means for each condition
+###tables of means for each condition
 ```{r}
+
 (impression_samples<-aggregate(Impression_Rating~condition,
                               all_data,
                               mean))
