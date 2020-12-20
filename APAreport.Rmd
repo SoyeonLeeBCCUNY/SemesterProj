@@ -56,7 +56,7 @@ Schroeder, J., & Epley, N. (2015). The sound of intellect: Speech reveals a thou
 
 The data were downloaded from https://raw.githubusercontent.com/CrumpLab/statisticsLab/master/data/SchroederEpley2015data.csv
 
-@schroeder_sound_2015 investigated perception of intellect inferred from speech involved in hiring process. In Experiment 4, the professional recruiters rated hypothetical candidates' intellect, impression, and hiring likeliness based on pitches delivered via audio or transcript. This report replicates the authors' analysis of the effects of two conditions (audio vs. transcript) on the impression and hire rating using independent samples t tests.
+@schroeder_sound_2015 investigated perception of intellect inferred from speech involved in hiring process. In Experiment 4, the professional recruiters rated hypothetical candidates' intellect, impression, and hiring likeliness based on pitches delivered via audio or transcript. This report replicates the authors' analysis of the effects of two conditions (audio vs. transcript) on the impression and hire rating scores using independent samples t tests.
 
 # Methods
 
@@ -83,7 +83,7 @@ library(tidyverse)
 all_data<-read.csv("SchroederEpley2015data.csv", header=TRUE)
 all_data<-all_data%>% rename(condition=ï..CONDITION)
 ```
-For each dimension (impression and hire), mean rating scores for each condition (transcript and voice) were submitted to independent samples t tests. Means and standard deviations in each condition for Impression ratings dimension are displayed in Table 1, and Figure 1.  Means and standard deviations in each condition for Hire ratings dimension are displayed in Table 2, and Figure 1.
+For each dimension (impression and hire), mean rating scores for each condition (transcript and voice) were submitted to independent samples t tests. Descriptive summary of Impression ratings are displayed in Table 1 and Figure 1. Descriptive summary of Hire ratings are displayed in Table 2 and Figure 2.  
 
 ```{r,warning=FALSE, message=FALSE}
 #t tests for impression and hire rating
@@ -125,42 +125,126 @@ apa_table(
 ```
 
 ```{r,warning=FALSE, message=FALSE}
-#Make and print figures
-CONDITION <- rep(all_data$condition,3)
+#Make and print figures 
+impression_plot<-all_data%>%group_by(condition)%>%
+  summarize(Impression_Mean=mean(Impression_Rating),
+            Impression_SEs=sd(Impression_Rating)/
+                           sqrt(length(Impression_Rating)))
+            
+impression_barplot<-data.frame(impression_plot)
 
-ratings<-c(all_data$Intellect_Rating,
-           all_data$Impression_Rating,
-           all_data$Hire_Rating)
+ggplot(impression_barplot,aes(x=condition,
+                              y=Impression_Mean,
+                              fill=condition))+
+  geom_col(position='dodge')+
+  geom_errorbar(aes(ymin=Impression_Mean-Impression_SEs,
+                    ymax=Impression_Mean+Impression_SEs),
+                width=.2,
+                position=position_dodge(width=.9))+
+  theme_apa(box=TRUE)+
+  labs(x="Conditions",
+       y="Recruiters' Evaluatons of Candidates",
+       title="Figure 1. Impression Ratings")+
+  scale_fill_grey()
+  
 
-num_to_repeat<-length(all_data$condition)
+hire_plot<-all_data%>%group_by(condition)%>%
+  summarize(Hire_Mean=mean(Hire_Rating),
+            Hire_SEs=sd(Hire_Rating)/
+                           sqrt(length(Hire_Rating)))
+   
+hire_barplot<-data.frame(hire_plot)
 
-rating_type<-rep(c("Intellect","General Impression","Hiring Likelihood"),num_to_repeat)
+ggplot(hire_barplot,aes(x=condition,
+                        y=Hire_Mean,
+                        fill=condition))+
+  geom_col(position='dodge')+
+  geom_errorbar(aes(ymin=Hire_Mean-Hire_SEs,
+                    ymax=Hire_Mean+Hire_SEs),
+                width=.2,
+                position=position_dodge(width=.9))+
+  theme_apa(box=TRUE)+
+  labs(x="Conditions",
+       y="Recruiters' Evaluatons of Candidates",
+       title="Figure 2. Hire Ratings")+
+  scale_fill_grey()
 
-plot_all<-data.frame(CONDITION,rating_type,ratings)
-
-descriptive_all<-plot_all %>%
-                  group_by(CONDITION,rating_type)%>%
-                  summarise(means=mean(ratings),
-                            SEs=sd(ratings)/sqrt(length(ratings)))
-
-apa_barplot(descriptive_all,
-        aes(x=rating_type, y=means, group=CONDITION))+
-    geom_bar(stat="identity",aes(fill=CONDITION),position="dodge")+
-        ylab("Recruiters' Evaluation of Candidates")+
-        theme_classic()+
-    geom_errorbar(aes(ymin=means-SEs,
-                      ymax=means+SEs),
-                  width=.25,
-                  position=position_dodge(width = .9))
 ```
+##By hand reporting
+The professional recruiters formed more positive impressions from listening to candidates' pitches(M=5.97,SD=1.92) than reading them in a script(M=4.07,SD=2.23),t(37)=2.85, p=.007, mean difference=1.89, 95% CI [0.55,3.24]. Similarly, recruiters were more likely to hire a candidate when recruiters listened to his or pitches (M=4.71,SD=2.26), rather than reading them in script (M=2.89,SD=2.06),t(37)=2.62,p=.013, mean difference=1.83, 95%CI [0.41,3.24]. 
+
+##papaja reporting
+The professional recruiters formed more positive impressions from listening to candidates' pitches(M=5.97,SD=1.92) than reading them in a script(M=4.07,SD=2.23),`r apa_print(impression_results)$statistic`, `r apa_print(impression_results)$estimate`. Similarly, recruiters were more likely to hire a candidate when recruiters listened to his or pitches (M=4.71,SD=2.26), rather than reading them in script (M=2.89,SD=2.06),`r apa_print(hire_results)$statistic`, `r apa_print(hire_results)$estimate`. 
 
 
 # Discussion
+The re-analysis successfully reproduced the analysis reported by @schroeder_sound_2015, with a minor difference from the original analysis.  For p-value report in Hire rating, @schroeder_sound_2015 reported p<.01.  The exact p-value obtained in this re-analysis was p=.013. 
+
+In the following section, a simulation based power analysis was performed. 
+
+##Simulation-based power analysis
+The design of Experiment 4 was a single-factor, two-level independent measures design with 39 subjects.  In each dimension (Impression or Hire rating), mean difference would reveal which of two conditions (voice or transcript) scored higher in their respective rating.  The power determines whether the mean difference could be true. 
+
+@schroeder_sound_2015 reported d=0.94 in the Impression rating analysis, and d=0.86 in the Hire rating analysis. 
+
+```{r}
+library(ggplot2)
+
+#Impression ratings
+sim_power <- function(x){
+  A <- rnorm(n=20,mean=0, sd=1)
+  B <- rnorm(n=20,mean=(0+x), sd=1)
+  return(t.test(A,B,var.equal=TRUE)$p.value)
+}
+
+effect_sizes <- seq(.1,2,.1)
+
+power <- sapply(effect_sizes,
+          FUN = function(x) {
+            sims <- replicate(1000,sim_power(x))
+            sim_power <- length(sims[sims<.01])/length(sims)
+            return(sim_power)})
+
+plot_df <- data.frame(effect_sizes,power)
+
+ggplot(plot_df, aes(x=effect_sizes,
+                    y=power))+
+  geom_point()+
+  geom_line()+
+  labs(x="Effect-size", title="Figure 3. The Power-curve for Impression")
+
+
+#Hire ratings 
+sim_power <- function(x){
+  A <- rnorm(n=20,mean=0, sd=1)
+  B <- rnorm(n=20,mean=(0+x), sd=1)
+  return(t.test(A,B,var.equal=TRUE)$p.value)
+}
+
+effect_sizes <- seq(.1,2,.1)
+
+power <- sapply(effect_sizes,
+          FUN = function(x) {
+            sims <- replicate(1000,sim_power(x))
+            sim_power <- length(sims[sims<.01])/length(sims)
+            return(sim_power)})
+
+plot_df <- data.frame(effect_sizes,power)
+
+ggplot(plot_df, aes(x=effect_sizes,
+                    y=power))+
+  geom_point()+
+  geom_line()+
+  labs(x="Effect-size", title="Figure 4. The Power-curve for Hire")
+```
 
 
 \newpage
 
 # References
+```{r}
+r_refs(file="r-references.bib")
+```
 
 \begingroup
 \setlength{\parindent}{-0.5in}

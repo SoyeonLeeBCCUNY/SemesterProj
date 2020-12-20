@@ -17,7 +17,7 @@ Schroeder, J., & Epley, N. (2015). The sound of intellect: Speech reveals a thou
 
 The data were downloaded from https://raw.githubusercontent.com/CrumpLab/statisticsLab/master/data/SchroederEpley2015data.csv
 
-Schroeder and Epley (2015) investigated perception of intellect inferred from speech involved in hiring process. In Experiment 4, the professional recruiters rated candidates' intellect, impression, and hiring likeliness based on pitches delivered via audio or transcript. This report replicates the authors' analysis of the effects of two conditions (audio vs. transcript) on the impression and hire rating using independent samples t tests.
+Schroeder and Epley (2015) investigated perception of intellect inferred from speech involved in hiring process. In Experiment 4, the professional recruiters rated candidates' intellect, impression, and hiring likeliness based on pitches delivered via audio or transcript. This report replicates the authors' analysis of the effects of two conditions (audio vs. transcript) on impression and hire rating scores using independent samples t tests.
 
 
 ##Re-analysis
@@ -45,7 +45,7 @@ hire_results<-t.test(all_data[all_data$condition=='audio',]$Hire_Rating,
 ```
 
 ###tables of means for each condition
-```{r}
+```{r,warning=FALSE, message=FALSE}
 impression_samples<-all_data%>%group_by(condition)%>%
   summarize(Mean=mean(Impression_Rating),
             SD=sd(Impression_Rating)
@@ -72,43 +72,54 @@ apa_table(
 ```
 
 ###Reproducing the figure
-```{r}
-CONDITION <- rep(all_data$condition,3)
+```{r,warning=FALSE, message=FALSE}
+#Make and print figures 
+impression_plot<-all_data%>%group_by(condition)%>%
+  summarize(Impression_Mean=mean(Impression_Rating),
+            Impression_SEs=sd(Impression_Rating)/
+                           sqrt(length(Impression_Rating)))
+            
+impression_barplot<-data.frame(impression_plot)
 
-ratings<-c(all_data$Intellect_Rating,
-           all_data$Impression_Rating,
-           all_data$Hire_Rating)
+ggplot(impression_barplot,aes(x=condition,
+                              y=Impression_Mean,
+                              fill=condition))+
+  geom_col(position='dodge')+
+  geom_errorbar(aes(ymin=Impression_Mean-Impression_SEs,
+                    ymax=Impression_Mean+Impression_SEs),
+                width=.2,
+                position=position_dodge(width=.9))+
+  theme_apa(box=TRUE)+
+  labs(x="Conditions",
+       y="Recruiters' Evaluatons of Candidates",
+       title="Figure 1. Impression Ratings")+
+  scale_fill_grey()
+  
 
-num_to_repeat<-length(all_data$condition)
+hire_plot<-all_data%>%group_by(condition)%>%
+  summarize(Hire_Mean=mean(Hire_Rating),
+            Hire_SEs=sd(Hire_Rating)/
+                           sqrt(length(Hire_Rating)))
+   
+hire_barplot<-data.frame(hire_plot)
 
-rating_type<-rep(c("Intellect","General Impression","Hiring Likelihood"),num_to_repeat)
-
-plot_all<-data.frame(CONDITION,rating_type,ratings)
-
-descriptive_all<-plot_all %>%
-                  group_by(CONDITION,rating_type)%>%
-                  summarise(means=mean(ratings),
-                            SEs=sd(ratings)/sqrt(length(ratings)))
-
-ggplot(descriptive_all,
-        aes(x=rating_type, y=means, group=CONDITION))+
-    geom_bar(stat="identity",aes(fill=CONDITION),position="dodge")+
-        ylab("Recruiters' Evaluation of Candidates")+
-        theme_classic()+
-    geom_errorbar(aes(ymin=means-SEs,
-                      ymax=means+SEs),
-                  width=.25,
-                  position=position_dodge(width = .9))
+ggplot(hire_barplot,aes(x=condition,
+                        y=Hire_Mean,
+                        fill=condition))+
+  geom_col(position='dodge')+
+  geom_errorbar(aes(ymin=Hire_Mean-Hire_SEs,
+                    ymax=Hire_Mean+Hire_SEs),
+                width=.2,
+                position=position_dodge(width=.9))+
+  theme_apa(box=TRUE)+
+  labs(x="Conditions",
+       y="Recruiters' Evaluatons of Candidates",
+       title="Figure 2. Hire Ratings")+
+  scale_fill_grey()
 ```
-
-
 ##Results
-
-The professional recruiters formed more positive impressions from listening to candidates' pitches than reading them in a script,`r apa_print(impression_results)$full_result`. The same pattern of evaluations was found in the hiring likeliness dimension. The preference to hire a candidate was higher when recruiters listened to pitches, rather than reading them in script,`r apa_print(hire_results)$full_result`. 
-
+The professional recruiters formed more positive impressions from listening to candidates' pitches(M=5.97,SD=1.92) than reading them in a script(M=4.07,SD=2.23),t(37)=2.85, p=.007, mean difference=1.89, 95% CI [0.55,3.24]. Similarly, recruiters were more likely to hire a candidate when recruiters listened to his or pitches (M=4.71,SD=2.26), rather than reading them in script (M=2.89,SD=2.06),t(37)=2.62,p=.013, mean difference=1.83, 95%CI [0.41,3.24]. 
 
 ##Discussion
+The re-analysis successfully reproduced the analysis reported by Schroeder and Epley (2015), with a minor difference from the original analysis.  For p-value report in Hire rating, Schroeder and Epley (2015) reported p<.01.  The exact p-value obtained in this re-analysis was p=.013. 
 
-In Experiment 4, the authors replicated previous experiments to investigate the real-world application. In Experiments 1-3, hypothetical employers judged that the candidates are more competent, thoughtful, and intelligent when they heard candidates' pitches rather than reading them. In addition, hearing pitches resulted in a more positive impression and increased willingness to hire the candidate. Experiment 4 revealed the same pattern of evaluation.  The use of professional recruiters in Experiment 4 provided the ecological validity of the finding. 
-
-The re-analysis successfully reproduced the analysis reported by Schroederand Epley (2015). One issue experienced in this replication is the order of conditions (audio vs. transcript) in the replicated figure. In the earlier code chunks, I put them in reverse to obtain a positive t statistic for results.  This seemingly resulted in switching the orders in the replicated figure. The bar for transcript level is on the left of the audio level for each dimension.

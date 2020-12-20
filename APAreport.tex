@@ -164,7 +164,7 @@ Schroeder, J., \& Epley, N. (2015). The sound of intellect: Speech reveals a tho
 
 The data were downloaded from \url{https://raw.githubusercontent.com/CrumpLab/statisticsLab/master/data/SchroederEpley2015data.csv}
 
-Schroeder and Epley (2015) investigated perception of intellect inferred from speech involved in hiring process. In Experiment 4, the professional recruiters rated hypothetical candidates' intellect, impression, and hiring likeliness based on pitches delivered via audio or transcript. This report replicates the authors' analysis of the effects of two conditions (audio vs.~transcript) on the impression and hire rating using independent samples t tests.
+Schroeder and Epley (2015) investigated perception of intellect inferred from speech involved in hiring process. In Experiment 4, the professional recruiters rated hypothetical candidates' intellect, impression, and hiring likeliness based on pitches delivered via audio or transcript. This report replicates the authors' analysis of the effects of two conditions (audio vs.~transcript) on the impression and hire rating scores using independent samples t tests.
 
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
@@ -187,7 +187,7 @@ The experiment was conducted online. Randomly assigned recruiters either read or
 \hypertarget{results}{%
 \section{Results}\label{results}}
 
-For each dimension (impression and hire), mean rating scores for each condition (transcript and voice) were submitted to independent samples t tests. Means and standard deviations in each condition for Impression ratings dimension are displayed in Table 1, and Figure 1. Means and standard deviations in each condition for Hire ratings dimension are displayed in Table 2, and Figure 1.
+For each dimension (impression and hire), mean rating scores for each condition (transcript and voice) were submitted to independent samples t tests. Descriptive summary of Impression ratings are displayed in Table 1 and Figure 1. Descriptive summary of Hire ratings are displayed in Table 2 and Figure 2.
 
 \begin{table}[tbp]
 
@@ -231,10 +231,26 @@ audio & 4.71 & 2.26\\
 
 \end{table}
 
-\includegraphics{APAreport_files/figure-latex/unnamed-chunk-3-1.pdf}
+\includegraphics{APAreport_files/figure-latex/unnamed-chunk-3-1.pdf} \includegraphics{APAreport_files/figure-latex/unnamed-chunk-3-2.pdf}
+\#\#By hand reporting
+The professional recruiters formed more positive impressions from listening to candidates' pitches(M=5.97,SD=1.92) than reading them in a script(M=4.07,SD=2.23),t(37)=2.85, p=.007, mean difference=1.89, 95\% CI {[}0.55,3.24{]}. Similarly, recruiters were more likely to hire a candidate when recruiters listened to his or pitches (M=4.71,SD=2.26), rather than reading them in script (M=2.89,SD=2.06),t(37)=2.62,p=.013, mean difference=1.83, 95\%CI {[}0.41,3.24{]}.
+
+\#\#papaja reporting
+The professional recruiters formed more positive impressions from listening to candidates' pitches(M=5.97,SD=1.92) than reading them in a script(M=4.07,SD=2.23),\(t(37) = 2.85\), \(p = .007\), \(\Delta M = 1.89\), 95\% CI \([0.55\), \(3.24]\). Similarly, recruiters were more likely to hire a candidate when recruiters listened to his or pitches (M=4.71,SD=2.26), rather than reading them in script (M=2.89,SD=2.06),\(t(37) = 2.62\), \(p = .013\), \(\Delta M = 1.83\), 95\% CI \([0.41\), \(3.24]\).
 
 \hypertarget{discussion}{%
 \section{Discussion}\label{discussion}}
+
+The re-analysis successfully reproduced the analysis reported by Schroeder and Epley (2015), with a minor difference from the original analysis. For p-value report in Hire rating, Schroeder and Epley (2015) reported p\textless.01. The exact p-value obtained in this re-analysis was p=.013.
+
+In the following section, a simulation based power analysis was performed.
+
+\#\#Simulation-based power analysis
+The design of Experiment 4 was a single-factor, two-level independent measures design with 39 subjects. In each dimension (Impression or Hire rating), mean difference would reveal which of two conditions (voice or transcript) scored higher in their respective rating. The power determines whether the mean difference could be true.
+
+Schroeder and Epley (2015) reported d=0.94 in the Impression rating analysis, and d=0.86 in the Hire rating analysis.
+
+\includegraphics{APAreport_files/figure-latex/unnamed-chunk-4-1.pdf} \includegraphics{APAreport_files/figure-latex/unnamed-chunk-4-2.pdf}
 
 \newpage
 
