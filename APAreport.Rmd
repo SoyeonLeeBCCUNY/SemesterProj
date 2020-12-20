@@ -14,7 +14,7 @@ affiliation:
     institution   : "Brooklyn College of the City University of New York"
  
 authornote: |
-  Soyeon Lee, Experimental Psychology Student, Broklyn College of the City of New York.
+  Soyeon Lee, Experimental Psychology Student, Brooklyn College of the City of New York.
 
 abstract: |
   A reproduction of the analysis for Experiment 4 from Schroeder and Epley (2015). 
@@ -56,7 +56,7 @@ Schroeder, J., & Epley, N. (2015). The sound of intellect: Speech reveals a thou
 
 The data were downloaded from https://raw.githubusercontent.com/CrumpLab/statisticsLab/master/data/SchroederEpley2015data.csv
 
-@schroeder_sound_2015 investigated perception of intellect inferred from speech involved in hiring process. In Experiment 4, the professional recruiters rated hypothetical candidates' intellect, impression, and hiring likeliness based on pitches delivered via audio or transcript. This report replicates the authors' analysis of the effects of two conditions (audio vs. transcript) on the impression and hire rating scores using independent samples t tests.
+@schroeder_sound_2015 investigated perception of intellect inferred from speech involved in the hiring process. In Experiment 4, professional recruiters rated hypothetical candidates' intellect, impression, and hiring likeliness based on pitches delivered via either audio or written transcript. This report replicates the authors' analysis of the effects of two conditions (audio vs. transcript) on the impression and hire rating scores using independent samples t tests.
 
 # Methods
 
@@ -66,11 +66,11 @@ There were 39 professional recruiters from Fortune 500 companies.
 
 ## Material
 
-Three randomly selected candidate pitches from Experiment 1 were used.
+The authors used three randomly selected candidate pitches from Experiment 1.  The pitches were presented to recruiters in the form of either a voice recording or a written transcript. 
 
 ## Procedure
 
-The experiment was conducted online. Randomly assigned recruiters either read or listened to candidates' pitches. The recruiters' responses on intellect, impression and hire ratings of candidates were recorded.
+The recruiters entered their ratings of candidates' pitches on the basis of intellect, impression, and likely to hire rating.  Data for impression and likely to hire ratings were analyzed.
 
 # Results
 ```{r,echo=FALSE,warning=FALSE,message=FALSE}
@@ -83,7 +83,7 @@ library(tidyverse)
 all_data<-read.csv("SchroederEpley2015data.csv", header=TRUE)
 all_data<-all_data%>% rename(condition=ï..CONDITION)
 ```
-For each dimension (impression and hire), mean rating scores for each condition (transcript and voice) were submitted to independent samples t tests. Descriptive summary of Impression ratings are displayed in Table 1 and Figure 1. Descriptive summary of Hire ratings are displayed in Table 2 and Figure 2.  
+For each dimension (impression and hire), mean rating scores for each condition (transcript and voice) were submitted to independent samples t tests. A descriptive summary of Impression ratings are displayed in Table 1 and Figure 1. A descriptive summary of Hire ratings are displayed in Table 2 and Figure 2.  
 
 ```{r,warning=FALSE, message=FALSE}
 #t tests for impression and hire rating
@@ -119,7 +119,7 @@ hire_samples[,-1]<-printnum(hire_samples[,-1])
 
 apa_table(
   hire_samples,
-    caption="Hire Rating samples.",
+    caption="Likely to Hire Rating samples.",
     escape=TRUE
 )
 ```
@@ -170,22 +170,22 @@ ggplot(hire_barplot,aes(x=condition,
   scale_fill_grey()
 
 ```
-##By hand reporting
-The professional recruiters formed more positive impressions from listening to candidates' pitches(M=5.97,SD=1.92) than reading them in a script(M=4.07,SD=2.23),t(37)=2.85, p=.007, mean difference=1.89, 95% CI [0.55,3.24]. Similarly, recruiters were more likely to hire a candidate when recruiters listened to his or pitches (M=4.71,SD=2.26), rather than reading them in script (M=2.89,SD=2.06),t(37)=2.62,p=.013, mean difference=1.83, 95%CI [0.41,3.24]. 
 
-##papaja reporting
-The professional recruiters formed more positive impressions from listening to candidates' pitches(M=5.97,SD=1.92) than reading them in a script(M=4.07,SD=2.23),`r apa_print(impression_results)$statistic`, `r apa_print(impression_results)$estimate`. Similarly, recruiters were more likely to hire a candidate when recruiters listened to his or pitches (M=4.71,SD=2.26), rather than reading them in script (M=2.89,SD=2.06),`r apa_print(hire_results)$statistic`, `r apa_print(hire_results)$estimate`. 
+## By hand reporting
+The professional recruiters formed more positive impressions from listening to candidates' pitches(M=5.97,SD=1.92) versus reading them in a script(M=4.07,SD=2.23),t(37)=2.85, p=.007, mean difference=1.89, 95% CI [0.55,3.24]. Similarly, recruiters were more likely to hire a candidate when recruiters listened to pitches (M=4.71,SD=2.26), rather than reading them in script (M=2.89,SD=2.06),t(37)=2.62,p=.013, mean difference=1.83, 95%CI [0.41,3.24]. 
+
+## Papaja reporting
+The professional recruiters formed more positive impressions from listening to candidates' pitches(M=5.97,SD=1.92) versus reading them in a script(M=4.07,SD=2.23),`r apa_print(impression_results)$statistic`, `r apa_print(impression_results)$estimate`. Similarly, recruiters were more likely to hire a candidate when recruiters listened to pitches (M=4.71,SD=2.26), rather than reading them in script (M=2.89,SD=2.06),`r apa_print(hire_results)$statistic`, `r apa_print(hire_results)$estimate`. 
 
 
 # Discussion
 The re-analysis successfully reproduced the analysis reported by @schroeder_sound_2015, with a minor difference from the original analysis.  For p-value report in Hire rating, @schroeder_sound_2015 reported p<.01.  The exact p-value obtained in this re-analysis was p=.013. 
 
-In the following section, a simulation based power analysis was performed. 
+In the following section, a simulation-based power analysis was performed. 
 
-##Simulation-based power analysis
-The design of Experiment 4 was a single-factor, two-level independent measures design with 39 subjects.  In each dimension (Impression or Hire rating), mean difference would reveal which of two conditions (voice or transcript) scored higher in their respective rating.  The power determines whether the mean difference could be true. 
-
-@schroeder_sound_2015 reported d=0.94 in the Impression rating analysis, and d=0.86 in the Hire rating analysis. 
+## Simulation-based power analysis
+The design of Experiment 4 was a single-factor, two-level independent measures design with 39 subjects.  In each dimension (Impression or Hire rating), mean difference would reveal which of two conditions (voice or transcript) scored higher in their respective rating.  
+@schroeder_sound_2015 reported d=0.94 in the Impression rating analysis, and d=0.86 in the Hire rating analysis. The power-curve analyses revealed that approximately 0.63 (Figure 3) and 0.50 (Figure 4) of power were needed to detect the effect sizes @schroeder_sound_2015 reported for Impression and Hire rating, respectively.    
 
 ```{r}
 library(ggplot2)
@@ -211,7 +211,7 @@ ggplot(plot_df, aes(x=effect_sizes,
                     y=power))+
   geom_point()+
   geom_line()+
-  labs(x="Effect-size", title="Figure 3. The Power-curve for Impression")
+  labs(x="Effect-size", title="Figure 3. Impression Rating Power-curve")
 
 
 #Hire ratings 
@@ -235,7 +235,7 @@ ggplot(plot_df, aes(x=effect_sizes,
                     y=power))+
   geom_point()+
   geom_line()+
-  labs(x="Effect-size", title="Figure 4. The Power-curve for Hire")
+  labs(x="Effect-size", title="Figure 4. Likely to Hire Raing Power-curve")
 ```
 
 

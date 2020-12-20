@@ -9,7 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-##Introduction
+
+## Introduction
 
 This report reproduces the analysis of Experiment 4 reported in Schroder and Epley (2015). The citation for the article is:
   
@@ -17,10 +18,11 @@ Schroeder, J., & Epley, N. (2015). The sound of intellect: Speech reveals a thou
 
 The data were downloaded from https://raw.githubusercontent.com/CrumpLab/statisticsLab/master/data/SchroederEpley2015data.csv
 
-Schroeder and Epley (2015) investigated perception of intellect inferred from speech involved in hiring process. In Experiment 4, the professional recruiters rated candidates' intellect, impression, and hiring likeliness based on pitches delivered via audio or transcript. This report replicates the authors' analysis of the effects of two conditions (audio vs. transcript) on impression and hire rating scores using independent samples t tests.
+Schroeder and Epley (2015) investigated perception of intellect inferred from speech involved in the hiring process. In Experiment 4, professional recruiters rated hypothetical candidates' intellect, impression, and hiring likeliness based on pitches delivered via either audio or written transcript. This report replicates the authors' analysis of the effects of two conditions (audio vs. transcript) on the impression and hire rating scores using independent samples t tests.
 
 
-##Re-analysis
+
+## Re-analysis
 ```{r,echo=FALSE,warning=FALSE,message=FALSE}
 #load libraries and data
 library(papaja)
@@ -44,7 +46,8 @@ hire_results<-t.test(all_data[all_data$condition=='audio',]$Hire_Rating,
                      var.equal=TRUE)
 ```
 
-###tables of means for each condition
+
+### Tables of means
 ```{r,warning=FALSE, message=FALSE}
 impression_samples<-all_data%>%group_by(condition)%>%
   summarize(Mean=mean(Impression_Rating),
@@ -71,7 +74,8 @@ apa_table(
 )
 ```
 
-###Reproducing the figure
+
+### Reproducing the figures
 ```{r,warning=FALSE, message=FALSE}
 #Make and print figures 
 impression_plot<-all_data%>%group_by(condition)%>%
@@ -117,9 +121,13 @@ ggplot(hire_barplot,aes(x=condition,
        title="Figure 2. Hire Ratings")+
   scale_fill_grey()
 ```
-##Results
-The professional recruiters formed more positive impressions from listening to candidates' pitches(M=5.97,SD=1.92) than reading them in a script(M=4.07,SD=2.23),t(37)=2.85, p=.007, mean difference=1.89, 95% CI [0.55,3.24]. Similarly, recruiters were more likely to hire a candidate when recruiters listened to his or pitches (M=4.71,SD=2.26), rather than reading them in script (M=2.89,SD=2.06),t(37)=2.62,p=.013, mean difference=1.83, 95%CI [0.41,3.24]. 
 
-##Discussion
-The re-analysis successfully reproduced the analysis reported by Schroeder and Epley (2015), with a minor difference from the original analysis.  For p-value report in Hire rating, Schroeder and Epley (2015) reported p<.01.  The exact p-value obtained in this re-analysis was p=.013. 
+## Results
+For each dimension (impression and hire), mean rating scores for each condition (transcript and voice) were submitted to independent samples t tests. A descriptive summary of Impression ratings are displayed in Table 1 and Figure 1. A descriptive summary of Hire ratings are displayed in Table 2 and Figure 2. 
+
+The professional recruiters formed more positive impressions from listening to candidates' pitches(M=5.97,SD=1.92) versus reading them in a script(M=4.07,SD=2.23),t(37)=2.85, p=.007, mean difference=1.89, 95% CI [0.55,3.24]. Similarly, recruiters were more likely to hire a candidate when recruiters listened to pitches (M=4.71,SD=2.26), rather than reading them in script (M=2.89,SD=2.06),t(37)=2.62,p=.013, mean difference=1.83, 95%CI [0.41,3.24]. 
+
+
+## Discussion
+The re-analysis successfully reproduced the analysis reported by Schroeder and Epley (2015), with a minor difference from the original analysis.  For p-value report in Hire rating, Schroeder and Epley (2015) reported p<.01.  The exact p-value obtained in this re-analysis was p=.013.
 

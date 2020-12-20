@@ -27,7 +27,7 @@ audio & 5.97 & 1.92\\
 \begin{center}
 \begin{threeparttable}
 
-\caption{\label{tab:unnamed-chunk-2}Hire Rating samples.}
+\caption{\label{tab:unnamed-chunk-2}Likely to Hire Rating samples.}
 
 \begin{tabular}{lll}
 \toprule
